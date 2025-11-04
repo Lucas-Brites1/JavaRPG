@@ -6,7 +6,7 @@ import Game.Character.Entity;
 
 public class DarkKnight extends Entity {
     public DarkKnight() {
-        super("Cavaleiro das Trevas", 'E', 120, 50, 35, 16, 6);
+        super("Cavaleiro das Trevas", 'E', 100, 50, 32, 14.5, 4);
         InitializeAttacks();
     }
 
@@ -15,9 +15,9 @@ public class DarkKnight extends Entity {
                 "Corte Sombrio - Ataque poderoso",
                 1,
                 AttackPattern.SINGLE,
-                25, 0, 0,
+                25, 0, 1,
                 1, 1,
-                3, 25, "3d6", 14
+                3, 18, "3d6", 14
         ));
 
         AddAttack("Onda Negra", new Attack(

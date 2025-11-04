@@ -96,6 +96,10 @@ public class StoryManager {
         }
 
         String nome = Terminal.Input.ReadString("\nDigite o nome do seu herói: ");
+        while (nome.isEmpty() || nome.length() < 3) {
+            Terminal.println("Nome de herói inválido, deve conter ao menos 4 letras!", Color.RED);
+            nome = Terminal.Input.ReadString("\nDigite o nome do seu herói: ");
+        }
 
         return switch (choice) {
             case 1 -> new Mage(nome);

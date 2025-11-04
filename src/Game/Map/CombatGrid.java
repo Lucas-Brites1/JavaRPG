@@ -79,56 +79,52 @@ public class CombatGrid {
 
         // Impressão dos números de coluna
         StringBuilder headerRow = new StringBuilder();
-        headerRow.append(" ".repeat(lineDigits));
-        headerRow.append(" ");
+        headerRow.append(" ".repeat(lineDigits + 1));
 
         for (int j = 0; j < columns; j++) {
-            // Centralizar o número na largura de 3 caracteres
-            String colNum = String.valueOf(j);
-
-            // Adicionar espaços para centralização
-            if (j < 10) {
-                headerRow.append(" ");
+            if (j <= 10) {
+                headerRow.append("  ").append(j);
+            } else {
+                headerRow.append(j).append("   ");
             }
-
-            headerRow.append(colNum);
-
-            // Adicionar espaço após o número
-            headerRow.append(" ");
         }
         System.out.println(headerRow);
 
-        // Linha superior do grid
         String indent = " ".repeat(lineDigits + 1);
         System.out.print(indent + "┌");
         for (int j = 0; j < columns; j++) {
-            System.out.print("─");
+            System.out.print("───");
             if (j < columns - 1) {
                 System.out.print("┬");
             }
         }
         System.out.println("┐");
 
-        // Corpo do grid
         for (int i = 0; i < lines; i++) {
             // Número da linha com padding à direita
             String lineNum = String.format("%-" + lineDigits + "d", i);
             System.out.print(lineNum + " │");
 
-            // Conteúdo da linha
             for (int j = 0; j < columns; j++) {
-                System.out.print(GetColoredChar(grid.GetChar(i, j)));
+                char cellChar = grid.GetChar(i, j);
+                String coloredChar = GetColoredChar(cellChar);
+
+                if (coloredChar.length() > 1) {
+                    System.out.print(" " + coloredChar + " ");
+                } else {
+                    System.out.print(" " + coloredChar + " ");
+                }
+
                 if (j < columns - 1) {
                     System.out.print("│");
                 }
             }
             System.out.println("│");
 
-            // Separador entre linhas (exceto após a última linha)
             if (i < lines - 1) {
                 System.out.print(indent + "├");
                 for (int j = 0; j < columns; j++) {
-                    System.out.print("─");
+                    System.out.print("───");
                     if (j < columns - 1) {
                         System.out.print("┼");
                     }
@@ -137,10 +133,9 @@ public class CombatGrid {
             }
         }
 
-        // Linha inferior do grid
         System.out.print(indent + "└");
         for (int j = 0; j < columns; j++) {
-            System.out.print("─");
+            System.out.print("───");
             if (j < columns - 1) {
                 System.out.print("┴");
             }

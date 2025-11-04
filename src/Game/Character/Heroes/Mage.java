@@ -15,22 +15,22 @@ public class Mage extends Entity {
     }
 
     private void InitializeAttacks() {
-        AddAttack("Chamuscar", new Attack(
-                "Chamuscar - Rajada de chamas rápida",
-                1,
-                AttackPattern.SINGLE,
-                12, 8, 0,
-                4, 4,
-                4, 18, "1d6", 12
-        ));
-
         AddAttack("Bola de Fogo", new Attack(
                 "Bola de Fogo - Explosão flamejante",
                 1,
                 AttackPattern.SQUARE_2X2,
-                30, 20, 1,
-                5, 4,
-                3, 22, "2d6", 14
+                10, 12, 1,
+                3, 8,
+                3, 19, "1d6", 6
+        ));
+
+        AddAttack("Chamuscar", new Attack(
+                "Chamuscar - Rajada de chamas rápida",
+                1,
+                AttackPattern.SINGLE,
+                12, 16, 2,
+                4, 6,
+                6, 22, "2d6", 12
         ));
 
         AddAttack("Raio Arcano", new Attack(
@@ -38,7 +38,7 @@ public class Mage extends Entity {
                 1,
                 AttackPattern.LINE_H5,
                 38, 28, 2,
-                7, 2,
+                5, 7,
                 5, 25, "3d4", 15
         ));
 
@@ -47,8 +47,8 @@ public class Mage extends Entity {
                 1,
                 AttackPattern.METEOR_STRIKE,
                 55, 70, 4,
-                6, 6,
-                1, 28, "4d6", 17
+                6, 8,
+                3, 30, "4d6", 17
         ));
     }
 

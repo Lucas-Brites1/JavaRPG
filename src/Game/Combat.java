@@ -135,12 +135,7 @@ public class Combat {
     private void playerAttack() {
         Attack selectedAttack = selectAttack();
 
-        if (selectedAttack == null) {
-            return;
-        }
-
         int[] targetPos = selectTarget(selectedAttack);
-
         if (targetPos == null) {
             return;
         }
@@ -148,10 +143,21 @@ public class Combat {
         Terminal.Clear();
         Terminal.Box("🎯 PREVIEW DO ATAQUE", Color.YELLOW);
         grid.PreviewAttackOnMap(targetPos[0], targetPos[1], selectedAttack.getPattern());
-        Terminal.Input.WaitConfirm("\n" + Color.GREEN + "Pressione ENTER para executar..." + Color.RESET);
 
-        Terminal.Clear();
-        executePlayerAttack(selectedAttack, targetPos[0], targetPos[1]);
+        System.out.println("Confirme o ataque ou cancele-o!");
+        System.out.println("0. Cancelar habilidade");
+        System.out.println("1. Atacar");
+        int choice = Terminal.Input.ReadInteger("Escolha: ", "Entrada inválida!");
+
+        if (choice == 0) {
+            playerTurn();
+        } else if (choice == 1) {
+            Terminal.Clear();
+            executePlayerAttack(selectedAttack, targetPos[0], targetPos[1]);
+        } else {
+            System.out.println("Opção inválida, tente novamente\n");
+            playerAttack();
+        }
     }
 
     private void playerMove() {
@@ -165,10 +171,16 @@ public class Combat {
         Terminal.emptyLines(1);
 
         int newX = Terminal.Input.ReadInteger("Nova LINHA (-1 para cancelar): ", "");
-        if (newX == -1) return;
+        if (newX == -1) {
+            playerMove();
+            return;
+        }
 
         int newY = Terminal.Input.ReadInteger("Nova COLUNA (-1 para cancelar): ", "");
-        if (newY == -1) return;
+        if (newY == -1) {
+            playerMove();
+            return;
+        }
 
         if (!grid.ValidPosition(newX, newY)) {
             System.out.println(Color.RED + "❌ Posição inválida!" + Color.RESET);
@@ -287,7 +299,7 @@ public class Combat {
 
         int choice = Terminal.Input.ReadInteger("Escolha (0-" + attackKeys.size() + "): ", 0, attackKeys.size());
 
-        if (choice == 0) return null;
+        if (choice == 0) playerTurn();
         if (choice < 1 || choice > attackKeys.size()) {
             System.out.println(Color.RED + "❌ Opção inválida!" + Color.RESET);
             Terminal.Input.WaitConfirm();
@@ -313,10 +325,16 @@ public class Combat {
         Terminal.emptyLines(1);
 
         int targetX = Terminal.Input.ReadInteger("Digite a LINHA (-1 para cancelar): ", "");
-        if (targetX == -1) return null;
+        if (targetX == -1) {
+            playerTurn();
+            return null;
+        }
 
         int targetY = Terminal.Input.ReadInteger("Digite a COLUNA (-1 para cancelar): ", "");
-        if (targetY == -1) return null;
+        if (targetY == -1) {
+            playerTurn();
+            return null;
+        }
 
         if (!grid.ValidPosition(targetX, targetY)) {
             System.out.println(Color.RED + "❌ Posição inválida!" + Color.RESET);
